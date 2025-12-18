@@ -1,0 +1,158 @@
+@import 'tailwindcss';
+
+:root {
+	--font-poppins: 'Poppins', sans-serif;
+
+	/* app colors */
+	--background: #fff;
+	--foreground: #333;
+	--foreground-secondary: #fff;
+	--accent: #f3f4f6;
+	--destructive: #e7000b;
+	--popup: #fff;
+
+	/* nav colors */
+	--nav-background: #fff;
+	--nav-foreground: #333;
+
+	/* button colors */
+	--btn-default-background: #000;
+	--btn-default-foreground: #fff;
+
+	--btn-outline-border: #000;
+	--btn-outline-background: transparent;
+	--btn-outline-foreground: #000;
+
+	/* shadows */
+	--shadow-card: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
+}
+
+@theme inline {
+	/* font styles */
+	--text-xsm: 0.8125rem;
+	--font-poppins: var(--font-poppins);
+
+	/* breakpoints */
+	--breakpoint-2lg: 1100px;
+
+	/* radius */
+	--radius-primary: 1rem;
+	--radius-input: 0.5rem;
+
+	/* app colors */
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-foreground-secondary: var(--foreground-secondary);
+	--color-accent: var(--accent);
+	--color-destructive: var(--destructive);
+	--color-popup: var(--popup);
+
+	/* nav colors */
+	--color-nav-background: var(--nav-background);
+	--color-nav-foreground: var(--nav-foreground);
+
+	/* button colors */
+	--color-btn-default-background: var(--btn-default-background);
+	--color-btn-default-foreground: var(--btn-default-foreground);
+
+	--color-btn-outline-border: var(--btn-outline-border);
+	--color-btn-outline-background: var(--btn-outline-background);
+	--color-btn-outline-foreground: var(--btn-outline-foreground);
+
+	/* shadows */
+	--shadow-card: var(--shadow-card);
+}
+
+@layer base {
+	html {
+		@apply bg-background;
+	}
+	body {
+		@apply font-poppins text-foreground;
+	}
+
+	button {
+		@apply cursor-pointer;
+	}
+
+	h1 {
+		@apply leading-[1em];
+	}
+}
+
+@layer components {
+	.card {
+		@apply flex w-full max-w-md flex-col gap-5 rounded-primary p-6 shadow-card;
+
+		.header {
+			@apply flex flex-col gap-2;
+
+			h1 {
+				@apply text-2xl font-medium;
+			}
+
+			p {
+				@apply text-sm font-normal;
+			}
+		}
+
+		.footer {
+			@apply flex flex-col gap-1;
+		}
+	}
+
+	.blog-card {
+		@apply flex flex-col gap-2;
+
+		.img-container {
+			@apply relative min-h-80;
+
+			img {
+				@apply size-full rounded-primary object-cover;
+			}
+
+			.link {
+				@apply absolute top-5 right-5 flex-center size-8 rounded-full bg-white;
+			}
+
+			.date {
+				@apply absolute bottom-5 left-5;
+			}
+		}
+
+		.category {
+			@apply flex items-center gap-1.5;
+
+			.dot {
+				@apply text-xl;
+			}
+
+			.text {
+				@apply text-sm font-medium;
+			}
+		}
+
+		h1 {
+			@apply text-2xl/7 font-medium;
+		}
+	}
+
+	.input {
+		@apply w-full rounded-input border px-3 py-2 text-sm aria-invalid:border-destructive;
+	}
+
+	.input-label {
+		@apply mb-1! block text-xsm font-medium;
+	}
+	.input-error {
+		@apply mt-1 text-xs font-medium text-destructive;
+	}
+}
+
+@utility flex-center {
+	@apply flex items-center justify-center;
+}
+
+@utility flex-between-center {
+	@apply flex items-center justify-between;
+}
