@@ -7,6 +7,7 @@
 	--background: #fff;
 	--foreground: #333;
 	--foreground-secondary: #fff;
+	--foreground-muted: #999;
 	--accent: #f3f4f6;
 	--destructive: #e7000b;
 	--popup: #fff;
@@ -43,6 +44,7 @@
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-foreground-secondary: var(--foreground-secondary);
+	--color-foreground-muted: var(--foreground-muted);
 	--color-accent: var(--accent);
 	--color-destructive: var(--destructive);
 	--color-popup: var(--popup);
@@ -138,7 +140,7 @@
 	}
 
 	.input {
-		@apply w-full rounded-input border px-3 py-2 text-sm aria-invalid:border-destructive;
+		@apply w-full rounded-input border px-3 py-2 text-sm placeholder:text-sm aria-invalid:border-destructive;
 	}
 
 	.input-label {
