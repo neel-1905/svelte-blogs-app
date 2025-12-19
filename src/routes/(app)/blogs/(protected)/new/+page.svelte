@@ -6,7 +6,8 @@
 		SelectTrigger,
 		Textarea,
 		SelectContent,
-		SelectOption
+		SelectOption,
+		ImageInput
 	} from '$lib/components/inputs';
 	import { Button, LoadingButton } from '$lib/components/buttons';
 	import { superForm } from 'sveltekit-superforms';
@@ -38,9 +39,9 @@
 		</div>
 
 		<!-- Form -->
-		<form method="POST" use:formEnhance class="space-y-6">
+		<form method="POST" use:formEnhance class="space-y-6" enctype="multipart/form-data">
 			<!-- Featured Image Upload -->
-			<div>image input</div>
+			<ImageInput name="image" label="Featured Image" error={$errors.image?.[0]} />
 
 			<!-- Title -->
 			<div>
@@ -62,6 +63,7 @@
 				label="Category"
 				bind:value={$form.category}
 				error={$errors.category?.[0]}
+				isCreatable
 			>
 				<SelectTrigger placeholder="Select a category" />
 				<SelectContent>
@@ -70,9 +72,6 @@
 					{/each}
 				</SelectContent>
 			</Select>
-
-			<!-- Debug: Show selected category value -->
-			<p class="text-xs text-gray-500">Selected category: {$form.category || 'None'}</p>
 
 			<!-- Content -->
 			<div>

@@ -6,7 +6,8 @@
 
 	const { placeholder = 'Select an option' }: { placeholder?: string } = $props();
 
-	const { toggle, state, setInputValue, open, close, error } = getContext<SelectContext>('select');
+	const { toggle, state, setInputValue, open, close, error, createNewOption, canCreateNew } =
+		getContext<SelectContext>('select');
 
 	function handleInput(e: Event) {
 		const target = e.target as HTMLInputElement;
@@ -18,9 +19,14 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		// Prevent Enter from toggling when typing
+		// Handle Enter key
 		if (e.key === 'Enter') {
 			e.preventDefault();
+
+			// If creatable and can create new, create it
+			if (state.isCreatable && canCreateNew()) {
+				createNewOption();
+			}
 		}
 		// Close on Escape
 		if (e.key === 'Escape') {

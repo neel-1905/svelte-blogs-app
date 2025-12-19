@@ -7,6 +7,8 @@
 		isOpen: boolean;
 		selectedOption: Option;
 		inputValue: string;
+		isCreatable?: boolean;
+		registeredOptions: Option[];
 	};
 	export type SelectContext = {
 		state: SelectState;
@@ -17,6 +19,8 @@
 		selectOption: (option: Option) => void;
 		setInputValue: (value: string) => void;
 		registerOption: (option: Option) => void;
+		createNewOption: () => void;
+		canCreateNew: () => boolean;
 	};
 </script>
 
@@ -24,12 +28,22 @@
 	import { setContext } from 'svelte';
 	import { InputError, InputLabel } from '..';
 
-	let { children, id = '', name = '', label = '', value = $bindable(''), error = '' } = $props();
+	let {
+		children,
+		id = '',
+		name = '',
+		label = '',
+		value = $bindable(''),
+		error = '',
+		isCreatable = false
+	} = $props();
 
 	const selectState: SelectState = $state({
 		isOpen: false,
 		selectedOption: { label: '', value: '' },
-		inputValue: ''
+		inputValue: '',
+		isCreatable,
+		registeredOptions: []
 	});
 
 	// Watch for external value changes
@@ -69,11 +83,47 @@
 	}
 
 	function registerOption(option: Option) {
+		// Add to registered options if not already there
+		const exists = selectState.registeredOptions.some((opt) => opt.value === option.value);
+		if (!exists) {
+			selectState.registeredOptions.push(option);
+		}
+
 		// When an option registers and matches the current value, select it
 		if (option.value === value && !selectState.inputValue) {
 			selectState.selectedOption = option;
 			selectState.inputValue = option.label;
 		}
+	}
+
+	function canCreateNew(): boolean {
+		if (!isCreatable || !selectState.inputValue.trim()) {
+			return false;
+		}
+
+		// Check if input matches any existing option
+		const inputLower = selectState.inputValue.toLowerCase().trim();
+		const matchesExisting = selectState.registeredOptions.some(
+			(opt) => opt.label.toLowerCase() === inputLower || opt.value.toLowerCase() === inputLower
+		);
+
+		return !matchesExisting;
+	}
+
+	function createNewOption() {
+		if (!canCreateNew()) return;
+
+		const newValue = selectState.inputValue.trim();
+		const newOption: Option = {
+			label: newValue,
+			value: newValue
+		};
+
+		// Register the new option
+		selectState.registeredOptions.push(newOption);
+
+		// Select the new option
+		selectOption(newOption);
 	}
 
 	setContext<SelectContext>('select', {
@@ -88,7 +138,9 @@
 		toggle,
 		selectOption,
 		setInputValue,
-		registerOption
+		registerOption,
+		createNewOption,
+		canCreateNew
 	});
 </script>
 

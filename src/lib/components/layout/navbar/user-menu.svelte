@@ -46,7 +46,7 @@
 				</a>
 
 				<a
-					href="/my-blogs"
+					href="/blogs/my-blogs"
 					class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-accent"
 				>
 					<BookMarked size={18} class="text-gray-600" />
