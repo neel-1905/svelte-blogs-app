@@ -107,7 +107,7 @@
 		@apply flex flex-col gap-2;
 
 		.img-container {
-			@apply relative min-h-80;
+			@apply relative h-96;
 
 			img {
 				@apply size-full rounded-primary object-cover;
@@ -157,4 +157,8 @@
 
 @utility flex-between-center {
 	@apply flex items-center justify-between;
+}
+
+@utility blogs-grid {
+	@apply grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 }

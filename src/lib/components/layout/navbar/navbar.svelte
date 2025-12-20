@@ -67,7 +67,7 @@
 				<!-- Right side: Search and Profile -->
 				<div class="flex items-center gap-4">
 					<a
-						href="/search"
+						href="/blogs/search"
 						class="rounded-full p-2 transition-colors hover:bg-accent"
 						aria-label="Search"
 					>
